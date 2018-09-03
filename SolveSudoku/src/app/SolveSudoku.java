@@ -48,6 +48,13 @@ public class SolveSudoku {
 	};
 	
 	public SolveSudoku(){
+		Init();
+		
+		
+
+	}
+	
+	public void Init(){
 		sudoku=new int[9+1][9+1];
 		rowOccupy =new int[9+1][9+1];
 		columnOccupy =new int[9+1][9+1];
@@ -55,9 +62,16 @@ public class SolveSudoku {
 		for(int x=1;x<=9;x++){
 			Arrays.fill(occupy[x], false);
 		}
-		
-		
-
+	}
+	
+	public void FillMatrix(int[][] matrix){
+		for(int y=1;y<=9;y++){
+			for(int x=1;x<=9;x++){
+				if(matrix[x][y]!=0){
+					setItem(x, y, matrix[x][y]);
+				}
+			}
+		}
 	}
 	
 
@@ -141,7 +155,7 @@ public class SolveSudoku {
 	
 	
 	/**
-	 * 输出当前种解
+	 * 输出当前解
 	 */
 	void print(){
 		System.out.println("Solve "+sum);
