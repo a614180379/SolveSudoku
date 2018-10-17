@@ -64,12 +64,15 @@ public class SolveSudoku {
 		}
 	}
 	
+	
+	/*
+	 * 用二维数组初始原题
+	 * */
 	public void FillMatrix(int[][] matrix){
 		for(int y=1;y<=9;y++){
 			for(int x=1;x<=9;x++){
-				if(matrix[x][y]!=0){
-					setItem(x, y, matrix[x][y]);
-				}
+				setItem(x, y, matrix[y][x]);
+				
 			}
 		}
 	}
@@ -82,10 +85,10 @@ public class SolveSudoku {
 	 * @param val
 	 */
 	public void setItem(int x,int y,int val){
-		sudoku[x][y]=val;
+		sudoku[y][x]=val;
 		columnOccupy[x][val]=y;
 		rowOccupy[y][val]=x;
-		occupy[shiftcoord[x][y]][val]=true;
+		occupy[shiftcoord[y][x]][val]=true;
 		sum1++;//统计探索次数用
 	}
 	
@@ -96,12 +99,12 @@ public class SolveSudoku {
 	 * @param y
 	 */
 	public void delItem(int x,int y){
-		int val=sudoku[x][y];
+		int val=sudoku[y][x];
 		if(val!=0){			
 			columnOccupy[x][val]=0;
 			rowOccupy[y][val]=0;
-			occupy[shiftcoord[x][y]][val]=false;
-			sudoku[x][y]=0;
+			occupy[shiftcoord[y][x]][val]=false;
+			sudoku[y][x]=0;
 
 		}
 		
@@ -144,9 +147,9 @@ public class SolveSudoku {
 			return ;
 		}
 		for(int x=1;x<=9;x++){
-			if(sudoku[x][y]!=0)continue;//该单元格有没有数据
+			if(sudoku[y][x]!=0)continue;//该单元格有没有数据
 			if(columnOccupy[x][val]!=0)continue;//通列无重复
-			if(occupy[shiftcoord[x][y]][val]==true)continue;//通3x3个内无重复
+			if(occupy[shiftcoord[y][x]][val]==true)continue;//通3x3个内无重复
 			setItem(x, y, val);
 			xun(val, y, false);
 			delItem(x, y);
@@ -161,7 +164,7 @@ public class SolveSudoku {
 		System.out.println("Solve "+sum);
 		for(int y=1;y<=9;y++){
 			for(int x=1;x<=9;x++){
-				System.out.print(sudoku[x][y]+",");
+				System.out.print(sudoku[y][x]+",");
 			}
 			System.out.println("");
 		}
